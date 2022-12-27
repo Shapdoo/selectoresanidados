@@ -1,0 +1,58 @@
+<h1 class="mt-5">Selectores anidados</h1>
+
+<form [formGroup]="selectsForm" (ngSubmit)="guardar()">
+  <div class="row mb-3">
+    <div class="col">
+      <label class="form-label">Continente:</label>
+      <select class="form-control" formControlName="region">
+        <option value="" hidden>Seleccione continente</option>
+        <option [value]="region | uppercase" *ngFor="let region of regions">
+          {{ region }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="$paises | async as paises">
+    <div class="col" *ngIf="paises.length > 0">
+      <label class="form-label">Pais:</label>
+      <select class="form-control" formControlName="pais">
+        <option value="" hidden>Seleccione Pais</option>
+        <option [value]="pais.cca3 | uppercase" *ngFor="let pais of paises">
+          {{ pais.name.common }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="$borders | async as borders">
+    <div class="col" *ngIf="borders.length > 0">
+      <label class="form-label">Fronteras:</label>
+      <select class="form-control" formControlName="frontera">
+        <option value="" hidden>Seleccione Frontera</option>
+        <option [value]="border.cca3 | uppercase" *ngFor="let border of borders">
+          {{ border.name.common }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="row mb-3" *ngIf="flag">
+    <div class="col-12">
+      <app-placeholder></app-placeholder>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end mt-5" type="submit">
+        Seleccionar
+      </button>
+    </div>
+  </div>
+</form>
+
+<h3>Formulario</h3>
+<pre>Valid: {{ selectsForm.valid }}</pre>
+<pre>Valid: {{ selectsForm.value | json }}</pre>
